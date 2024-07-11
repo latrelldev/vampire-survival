@@ -95,6 +95,7 @@ public class WaveSpawner : MonoBehaviour
         return true;
     }
 
+
     IEnumerator SpawnWave(Wave _wave)
     {
         Debug.Log("Spawning wave:" + _wave.name);
