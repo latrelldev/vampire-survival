@@ -340,7 +340,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 6909955573941115347}
   bulletPrefab: {fileID: 8298397584231490499, guid: 1139c0da6053b574ebe4625c5bd2c2ed, type: 3}
+  fireSpeed: 1
   inimigo: {fileID: 3935097585284917653, guid: f6bacaf9ba149494fba61a4ab4e006e4, type: 3}
+  minDistance: 10
   bulletForce: 20
 --- !u!114 &8828505259789931407
 MonoBehaviour:
