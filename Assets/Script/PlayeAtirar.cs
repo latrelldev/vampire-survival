@@ -4,42 +4,51 @@ using UnityEngine;
 
 public class PlayeAtirar : MonoBehaviour
 {
-  public Transform firePoint;
-  public GameObject bulletPrefab;
-
+    public Transform firePoint;
+    public GameObject bulletPrefab;
+    public float fireSpeed = 1;
     private float timer;
     public GameObject inimigo;
+    public float minDistance;
 
-  public float bulletForce = 20f;
+    public float bulletForce = 20f;
 
-   
+
 
 
     void Update()
     {
-        if(inimigo == null)
+        if (inimigo == null)
         {
             inimigo = GameObject.FindGameObjectWithTag("Inimigo");
         }
 
-        float distance = Vector2.Distance(transform.position, inimigo.transform.position);
-       
+        if (inimigo == null)
+        {
+            return;
+        }
 
-        if (distance < 5)
+
+
+
+        float distance = Vector2.Distance(transform.position, inimigo.transform.position);
+
+
+        if (distance < minDistance)
         {
             timer += Time.deltaTime;
-            if (timer > 1)
+            if (timer > fireSpeed)
             {
                 timer = 0;
                 Shoot();
             }
-        }      
+        }
     }
-  
 
-  void Shoot()
+
+    void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-      
+        Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+
     }
 }

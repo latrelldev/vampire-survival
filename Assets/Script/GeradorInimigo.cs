@@ -24,10 +24,10 @@ public class GeradorInimigo : MonoBehaviour
     }
     void Awake()
     {
-        SetTimeUntilSpawn();  
+        SetTimeUntilSpawn();
     }
 
-   
+
     private void SetTimeUntilSpawn()
     {
         timeUntilSpawn = Random.Range(minimumSpawnTime, maxSpawnTime);

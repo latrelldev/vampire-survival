@@ -9,7 +9,7 @@ public class PlayerMovimentação : MonoBehaviour
     public Camera cam;
     public Vector2 movement;
     public Vector2 mousePosition;
- 
+
 
     private void Start()
     {
@@ -33,6 +33,6 @@ public class PlayerMovimentação : MonoBehaviour
         rig.rotation = angle;
     }
 
-  
+
 
 }
