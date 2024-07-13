@@ -322,10 +322,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f430451006f6c48a4d74b7ead45c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
   cam: {fileID: 0}
   movement: {x: 0, y: 0}
   mousePosition: {x: 0, y: 0}
+  enemy: {fileID: 3935097585284917653, guid: f6bacaf9ba149494fba61a4ab4e006e4, type: 3}
+  speed: 0
+  moveSpeed: 4
+  _enemycheckcircleradius: 3.46
+  _enemyCheckvircleRadius: 0
+  _enemyCheckDistance: 0
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6750071520111604132
 MonoBehaviour:
   m_ObjectHideFlags: 0

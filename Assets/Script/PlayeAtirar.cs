@@ -10,11 +10,7 @@ public class PlayeAtirar : MonoBehaviour
     private float timer;
     public GameObject inimigo;
     public float minDistance;
-
     public float bulletForce = 20f;
-
-
-
 
     void Update()
     {
