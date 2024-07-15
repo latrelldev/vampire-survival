@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour
     public Transform rotate;
     public float turnSpeed;
 
-    public GameObject bulletPrefab
+    public GameObject bulletPrefab;
     
 
     private void Start()
