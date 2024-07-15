@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bala
   - Inimigo
   - Perceiver
+  - Enemy
   layers:
   - Default
   - TransparentFX
