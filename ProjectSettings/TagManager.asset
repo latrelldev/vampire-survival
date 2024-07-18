@@ -7,6 +7,7 @@ TagManager:
   - Inimigo
   - Perceiver
   - Enemy
+  - Target
   layers:
   - Default
   - TransparentFX

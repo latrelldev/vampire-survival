@@ -12,29 +12,59 @@ public class Player : MonoBehaviour
     private Vector3[] directions = new Vector3[4];
     private Vector3 finalDir;
 
+    public float fireRate = 1f;
+    private float fireCountDown;
+
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
 
     private void Update()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sensorRange, mask);
 
-        directions = new Vector3[colliders.Length];
-        finalDir = Vector3.zero;
+        Collider2D closest = null;
+        float minDistance = 999;
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            var direction =   colliders[i].transform.position - transform.position;
-            var totalDirection = direction.normalized * sensorRange;
-            directions[i] = -totalDirection + direction;
-            finalDir += directions[i];
-        }
+            var distance = Vector3.Distance(colliders[i].transform.position, transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = colliders[i];
+            }
 
-        transform.position += finalDir.normalized * Time.deltaTime * moveSpeed;
+        }
+        if (closest != null)
+        {
+            var direction = closest.transform.position - transform.position;
+
+            transform.up = direction;
+
+            if (fireCountDown <= 0f)
+            {
+                Shoot();
+                fireCountDown = 1f / fireRate;
+            }
+           
+        }
+   
+        fireCountDown -= Time.deltaTime;
     }
+    void Shoot()
+    {
+        GameObject bulletGO = (GameObject) Instantiate (bulletPrefab, firePoint.position, firePoint.rotation);
+        Bullet bullet = bulletGO.GetComponent<Bullet>();
+
+    }
+
+
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, sensorRange);
-        foreach(var direction in directions)
+        foreach (var direction in directions)
         {
             finalDir += direction;
             Gizmos.DrawLine(transform.position, transform.position + direction);
@@ -45,3 +75,4 @@ public class Player : MonoBehaviour
     }
 }
 
+ 

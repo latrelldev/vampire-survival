@@ -45,7 +45,6 @@ public class GeradorInimigo : MonoBehaviour
         Vector2 spawnPosition = new Vector2(randomX, transform.position.y);
 
         var enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        enemy.GetComponent<InimigMovimentação>().SetTarget(playerRef);
         SetTimeUntilSpawn();
     }
 

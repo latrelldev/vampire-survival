@@ -7,6 +7,13 @@ public class Bullet : MonoBehaviour
     public float bulletForce = 20f;
     private float timer;
 
+    private Transform closest;
+
+     public void Seek(Transform _closest)
+     {
+        closest = _closest;
+     }
+
 
     private void Update()
     {
@@ -17,14 +24,19 @@ public class Bullet : MonoBehaviour
         if (timer > 5)
         {
             Destroy(gameObject);
+            
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Inimigo"))
+        Debug.Log(other.gameObject);
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if (enemy != null)
         {
+            enemy.TakeDamager(1);
             Destroy(gameObject);
+            Debug.Log("destroi");
         }
     }
 }
