@@ -35,11 +35,11 @@ public class InimigMovimentação : MonoBehaviour
         if (collision.tag == "Player")
         {
 
-            var healthComponent = collision.GetComponent<Health>();
-            if (healthComponent != null)
-            {
-                healthComponent.TakeDamage(1);
-            }
+            ////var healthComponent = collision.GetComponent<Health>();
+            //if (healthComponent != null)
+            //{
+            //    healthComponent.TakeDamage(1);
+            //}
         }
     }
 }

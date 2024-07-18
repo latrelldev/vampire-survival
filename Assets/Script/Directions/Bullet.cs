@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float bulletForce = 20f;
     private float timer;
+    public int bulletDamage;
 
     private Transform closest;
 
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamager(1);
+            enemy.TakeDamager(bulletDamage);
             Destroy(gameObject);
             Debug.Log("destroi");
         }
