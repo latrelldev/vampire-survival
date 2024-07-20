@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameManager gameManager;
 
@@ -12,24 +13,25 @@ public class Player : MonoBehaviour
     private Vector3[] directions = new Vector3[4];
     private Vector3 finalDir;
 
-    public float fireRate = 1f;
+    [SerializeField] float fireRate = 1f;
     private float fireCountDown;
 
-    public GameObject bulletPrefab;
-    public Transform firePoint;
+    [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform body;
 
-    public int bulletDamage;
+    [SerializeField] private int bulletDamage;
 
     private void Update()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sensorRange, mask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(body.position, sensorRange, mask);
 
         Collider2D closest = null;
         float minDistance = 999;
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            var distance = Vector3.Distance(colliders[i].transform.position, transform.position);
+            var distance = Vector3.Distance(colliders[i].transform.position, body.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -39,25 +41,24 @@ public class Player : MonoBehaviour
         }
         if (closest != null)
         {
-            var direction = closest.transform.position - transform.position;
+            var direction = closest.transform.position - body.position;
 
-            transform.up = direction;
+            body.up = direction;
 
             if (fireCountDown <= 0f)
             {
                 Shoot();
                 fireCountDown = 1f / fireRate;
             }
-           
+
         }
-   
+
         fireCountDown -= Time.deltaTime;
     }
     void Shoot()
     {
-        GameObject bulletGO = (GameObject) Instantiate (bulletPrefab, firePoint.position, firePoint.rotation);
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-
+        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.Set(bulletDamage);
     }
 
 
@@ -74,6 +75,10 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + finalDir);
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+    }
 }
 
- 

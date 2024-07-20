@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float bulletForce = 20f;
+    [SerializeField] private float bulletForce = 20f;
     private float timer;
-    public int bulletDamage;
+    private int bulletDamage;
 
-    private Transform closest;
-
-     public void Seek(Transform _closest)
-     {
-        closest = _closest;
-     }
-
+    public void Set(int damage)
+    {
+        bulletDamage = damage;
+    }
 
     private void Update()
     {
@@ -25,7 +22,7 @@ public class Bullet : MonoBehaviour
         if (timer > 5)
         {
             Destroy(gameObject);
-            
+
         }
     }
 

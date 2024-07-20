@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 7688657550061706062}
   - component: {fileID: 5994438775180259789}
   - component: {fileID: 2917746125646713614}
+  - component: {fileID: 8794202525778633066}
   - component: {fileID: 2640281224435058824}
   - component: {fileID: 4203681425716627496}
   - component: {fileID: 1837488890753500732}
   - component: {fileID: 2137337158040679550}
-  - component: {fileID: 8794202525778633066}
   - component: {fileID: 4222803024575000577}
   m_Layer: 7
   m_Name: Agent2D Follow
@@ -37,7 +37,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -5, y: -1, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1.5000002, y: 1.5000002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -231,9 +231,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Torque: 0.2
   Speed: 10
-  ObjectiveAsSpeed: -1
-  Context: {fileID: 0}
-  Body2D: {fileID: 0}
+  ObjectiveAsSpeed: 0
+  Context: {fileID: 2452449842121218759}
+  Body2D: {fileID: 2640281224435058824}
+--- !u!114 &8794202525778633066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638365098522610643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 336943168, guid: b26ce4b80a42c6441af375612ff69ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environmentFoldout: 0
+  SteeringPerceiver: {fileID: 0}
+  ObjectTag: Untagged
+  Range: -1
+  rangeGizmo:
+    Enabled: 0
+    Color: {r: 0.2627451, g: 0.79607844, b: 0.24705882, a: 1}
 --- !u!50 &2640281224435058824
 Rigidbody2D:
   serializedVersion: 4
@@ -332,25 +351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 25
---- !u!114 &8794202525778633066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6638365098522610643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 336943168, guid: b26ce4b80a42c6441af375612ff69ca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  environmentFoldout: 0
-  SteeringPerceiver: {fileID: 0}
-  ObjectTag: Untagged
-  Range: -1
-  rangeGizmo:
-    Enabled: 0
-    Color: {r: 0.2627451, g: 0.79607844, b: 0.24705882, a: 1}
 --- !u!114 &4222803024575000577
 MonoBehaviour:
   m_ObjectHideFlags: 0
