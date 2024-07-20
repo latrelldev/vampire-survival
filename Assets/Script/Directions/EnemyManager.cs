@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private Transform holder;
     public List<Enemy> Enemies = new List<Enemy>();
 
     [SerializeField] private AIMSteeringPerceiver perceiver;
@@ -20,9 +20,9 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public Enemy SpawnEnemy()
+    public Enemy SpawnEnemy(Enemy enemyPrefab, Vector3 position)
     {
-        Enemy enemy = Instantiate(enemyPrefab);
+        Enemy enemy = Instantiate(enemyPrefab, position, Quaternion.identity, holder);
         enemy.Setup(perceiver);
         Enemies.Add(enemy);
         return enemy;

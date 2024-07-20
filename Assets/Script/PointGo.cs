@@ -12,6 +12,10 @@ public class PointGo : MonoBehaviour
     private Vector2 lastclickposition;
     private bool moving;
 
+    [SerializeField]
+    private Transform body;
+
+
     private void Start()
     {
         BackgroundClick.OnGroundClicked += OnGroundClicked;
@@ -32,8 +36,13 @@ public class PointGo : MonoBehaviour
     {
         if (moving && (Vector2)transform.position != lastclickposition) 
         {
-            float step = speed * Time.deltaTime ;
-            transform.position = Vector2.MoveTowards(transform.position,lastclickposition,step);
+            var direction = lastclickposition - (Vector2)transform.position;
+            transform.position += (Vector3)direction.normalized * Time.deltaTime * speed;
+
+            body.up = direction;
+            //Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            //rb.MovePosition(Time.deltaTime * speed * direction.normalized);
+            //transform.position = Vector2.MoveTowards(transform.position,lastclickposition,step);
         }
         else
         {

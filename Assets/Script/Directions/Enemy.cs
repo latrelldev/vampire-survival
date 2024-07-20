@@ -10,7 +10,10 @@ public class Enemy : MonoBehaviour
 
     public void Setup(AIMSteeringPerceiver perceiver)
     {
+        Debug.Log(filter.SteeringPerceiver);
+        Debug.Log(perceiver);
         filter.SteeringPerceiver = perceiver;
+        Debug.Log(filter.SteeringPerceiver);
     }
 
     public void TakeDamager(int value)
@@ -20,7 +23,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    
+
     }
 }
 

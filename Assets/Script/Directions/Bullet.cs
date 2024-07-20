@@ -9,8 +9,6 @@ public class Bullet : MonoBehaviour
     private float timer;
     private int bulletDamage;
 
-    public AIMEnvironment env;
-
     public void Set(int damage)
     {
         bulletDamage = damage;
@@ -18,14 +16,12 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-
         transform.position += transform.up * bulletForce * Time.deltaTime;
 
         timer += Time.deltaTime;
         if (timer > 5)
         {
             Destroy(gameObject);
-
         }
     }
 
@@ -36,6 +32,7 @@ public class Bullet : MonoBehaviour
             var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             enemyHealth.TakeDamage(bulletDamage);
             Debug.Log("danoInimigo");
+            Destroy(gameObject);
         }
     }
 }
