@@ -29,15 +29,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(other.gameObject);
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy != null)
+        if (collision.tag == "Inimigo")
         {
-            enemy.TakeDamager(bulletDamage);
-            Destroy(gameObject);
-            Debug.Log("destroi");
+            var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            enemyHealth.TakeDamage(bulletDamage);
+            Debug.Log("danoInimigo");
         }
     }
 }

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1837488890753500732}
   - component: {fileID: 2137337158040679550}
   - component: {fileID: 8794202525778633066}
+  - component: {fileID: 4222803024575000577}
   m_Layer: 7
   m_Name: Agent2D Follow
   m_TagString: Inimigo
@@ -350,3 +351,17 @@ MonoBehaviour:
   rangeGizmo:
     Enabled: 0
     Color: {r: 0.2627451, g: 0.79607844, b: 0.24705882, a: 1}
+--- !u!114 &4222803024575000577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638365098522610643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47a914c70c5e864bb86b554ce62bdaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 20
+  _maximumHealth: 20

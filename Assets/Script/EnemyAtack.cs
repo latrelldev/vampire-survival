@@ -12,9 +12,9 @@ public class EnemyAtack : MonoBehaviour
     {
         if (collision.tag == "Target")
         {
-         var healthController = collision.gameObject.GetComponent<HealthController>();
+         var playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
 
-         healthController.TakeDamage(_damageAmount);
+         playerHealth.TakeDamage(_damageAmount);
             Debug.Log("dano");
         }
     }

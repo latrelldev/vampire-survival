@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class HealthController : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
     private float _currentHealth;

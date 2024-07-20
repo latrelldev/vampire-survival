@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-    public float bulletDamage;
+    public int bulletDamage;
 
     private void Update()
     {
