@@ -312,8 +312,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   fireRate: 1.05
-  bulletPrefab: {fileID: 8320754148715779333, guid: 07c5b31264193394f81d74a1850b7993, type: 3}
+  bulletPrefab: {fileID: 3641474548757974024, guid: 07c5b31264193394f81d74a1850b7993, type: 3}
   firePoint: {fileID: 8791479576735203034}
+  body: {fileID: 0}
   bulletDamage: 10
 --- !u!114 &2557006815728014374
 MonoBehaviour:

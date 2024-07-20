@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Player target;
     [SerializeField]
     private int health = 5;
+    [SerializeField]
+    private AIMSteeringFilter filter;
+
+    public void Setup(AIMSteeringPerceiver perceiver)
+    {
+        filter.SteeringPerceiver = perceiver;
+    }
 
     public void TakeDamager(int value)
     {
@@ -15,15 +21,6 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     
-    }
-    private void Awake()
-    {
-        var filter = GetComponent<AIMSteeringFilter>();
-        filter.SteeringPerceiver = FindObjectOfType<AIMSteeringPerceiver>();
-    }
-    public void Setup(Player target)
-    {
-        this.target = target;
     }
 }
 

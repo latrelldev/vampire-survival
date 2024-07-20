@@ -1,3 +1,4 @@
+using Polarith.AI.Move;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletForce = 20f;
     private float timer;
     private int bulletDamage;
+
+    public AIMEnvironment env;
 
     public void Set(int damage)
     {

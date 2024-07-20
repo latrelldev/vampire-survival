@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Player Player => player;
-    [SerializeField] private Player player;
+    public PlayerManager PlayerManager => playerManager;
+    [SerializeField] private PlayerManager playerManager;
+
 
     public EnemyManager EnemyManager => enemyManager;
     [SerializeField] private EnemyManager enemyManager;

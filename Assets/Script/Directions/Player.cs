@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Polarith.AI.Move;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,6 +22,18 @@ public class Player : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Transform body;
 
     [SerializeField] private int bulletDamage;
+
+    private PlayerManager playerManager;
+
+    public void Setup(PlayerManager manager)
+    {
+        playerManager = manager;
+    }
+
+    private void OnDestroy()
+    {
+        playerManager.RemovePlayer(this);
+    }
 
     private void Update()
     {
