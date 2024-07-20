@@ -19,21 +19,38 @@ public class CardZoneView<T> : MonoBehaviour, ICardZoneView where T : CardZone
 
     public virtual CardAnchor GetAnchorForCard(CardInstance card)
     {
-        CardAnchor anchor = Instantiate(anchorPrefab, holder);
-        anchor.transform.name += $"({anchors.Count()})";
-        anchor.SetZone(this);
-        anchors.Add(card, anchor);
+        if (!anchors.TryGetValue(card, out var anchor))
+        {
+            anchor = Instantiate(anchorPrefab, holder);
+            anchor.transform.name += $"({anchors.Count()})";
+            anchor.SetZone(this);
+            anchors.Add(card, anchor);
+        }
         return anchor;
     }
 
     public virtual CardView GetViewForCard(CardInstance card)
     {
-        CardView view = Instantiate(zoneViewPrefab);
-        view.transform.name += $"({views.Count()})";
-        //CardAnchor anchor = anchors[card];
-        view.Setup(card);
-        views.Add(card, view);
+        if (views.TryGetValue(card, out var view))
+        {
+            view = Instantiate(zoneViewPrefab);
+            view.transform.name += $"({views.Count()})";
+            //CardAnchor anchor = anchors[card];
+            view.Text.text = views.Count().ToString();
+            view.Setup(card);
+            views.Add(card, view);
+        }
         return view;
+    }
+
+    private void TryBindViewAnchor(CardInstance card)
+    {
+        if(!anchors.TryGetValue(card, out var anchor))
+        {
+            return;
+        }
+
+        //if()
     }
 
     public virtual void RemoveCard(CardInstance card, bool destroyView)

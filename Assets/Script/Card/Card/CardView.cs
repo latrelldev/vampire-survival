@@ -16,11 +16,12 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void Setup(CardInstance card)
     {
-
     }
 
     public void SetViewAnchor(CardAnchor anchor)
     {
+        ReleaseAnchor();
+
         Anchor = anchor;
         Anchor.OnCardAnchorChanged += UpdateCardView;
         ResetTargetPos();
@@ -31,9 +32,17 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         State = state;
     }
 
+    private void ReleaseAnchor()
+    {
+        if (Anchor != null)
+        {
+            Anchor.OnCardAnchorChanged -= UpdateCardView;
+        }
+    }
+
     private void OnDestroy()
     {
-        Anchor.OnCardAnchorChanged -= UpdateCardView;
+        ReleaseAnchor();
     }
 
     private void Update()

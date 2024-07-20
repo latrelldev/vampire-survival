@@ -32,7 +32,9 @@ public class DefaultCardTransition : CardTransition<ICardZoneView, ICardZoneView
         CardAnchor newAnchor = to.GetAnchorForCard(card);
         yield return null; //wait a frame so layout accounts for anchor
         CardView newView = to.GetViewForCard(card);
-        
+
+        newView.transform.SetParent(reference.Holder, true);
+
         if (currentView != null)
         {
             GameObject.Destroy(currentView.gameObject);
