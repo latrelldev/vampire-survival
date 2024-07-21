@@ -105,13 +105,15 @@ GameObject:
   - component: {fileID: 6706758740987891577}
   - component: {fileID: 4605514967250978030}
   - component: {fileID: 7608010985046004993}
+  - component: {fileID: 3693512608680623090}
+  - component: {fileID: 6496144616296147629}
   m_Layer: 7
   m_Name: Agent2D Follow
   m_TagString: Inimigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &773663673039329927
 Transform:
   m_ObjectHideFlags: 0
@@ -197,7 +199,7 @@ MonoBehaviour:
   SensorShared: 1
   Sensor: {fileID: 11400000, guid: 17ae8395354cddc419113c83a5f66413, type: 2}
   objectiveLabels:
-  - Interest
+  - Interest2
   context:
     minObjectives: 00
     normObjectives: 01
@@ -427,7 +429,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.32000008
+  m_Radius: 0.5
 --- !u!50 &4605514967250978030
 Rigidbody2D:
   serializedVersion: 4
@@ -443,7 +445,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -482,3 +484,36 @@ MonoBehaviour:
     AngleMapping: 2
     MaxIncrease: 0.2
     MaxAngle: 45
+--- !u!95 &3693512608680623090
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638365098522610643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29e9d9e9ecda042b705883c8be9117, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6496144616296147629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638365098522610643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b68768a020851542b1ef385cf099e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
