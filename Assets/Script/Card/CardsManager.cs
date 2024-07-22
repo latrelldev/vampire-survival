@@ -24,11 +24,11 @@ public class CardsManager : MonoBehaviour
     {
         List<CardInstance> cards = new List<CardInstance>()
         {
-            new CardInstance(),
-            new CardInstance(),
-            new CardInstance(),
-            new CardInstance(),
-            new CardInstance(),
+            new CardInstance(1),
+            new CardInstance(2),
+            new CardInstance(3),
+            new CardInstance(4),
+            new CardInstance(5),
         };
 
         Setup(cards);

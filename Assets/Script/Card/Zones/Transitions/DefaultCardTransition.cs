@@ -5,40 +5,41 @@ public class DefaultCardTransition : CardTransition<ICardZoneView, ICardZoneView
 {
     public override bool ValidateTransition(ICardZoneView from, ICardZoneView to)
     {
-        return true;
+        return from != null && to != null;
     }
 
-    protected override IEnumerator ExecuteTransition(ViewAnchorReference reference, ICardZoneView from, ICardZoneView to)
+    protected override IEnumerator ExecuteTransition(CardInstance card, ICardZoneView from, ICardZoneView to)
     {
-        CardInstance card = reference.Card;
-
-        if (reference.ViewInstance != null)
-        {
-            reference.ViewInstance.SetState(CardState.Animating);
-        }
-
+        CardView currentView = from == null ? null : from.GetViewForCard(card);
         if (from != null)
         {
             from.RemoveCard(card, false);
         }
 
-        CardView currentView = from == null ? null : from.GetViewForCard(card);
         if (to == null && currentView != null)
         {
             GameObject.Destroy(currentView.gameObject);
             yield break;
         }
 
+        if (currentView != null)
+        {
+            currentView.SetState(CardState.Animating);
+        }
+
         CardAnchor newAnchor = to.GetAnchorForCard(card);
         yield return null; //wait a frame so layout accounts for anchor
         CardView newView = to.GetViewForCard(card);
 
-        newView.transform.SetParent(reference.Holder, true);
-
         if (currentView != null)
         {
             GameObject.Destroy(currentView.gameObject);
+
+            newView.transform.position = currentView.transform.position;
+            newView.transform.rotation = currentView.transform.rotation;
+            newView.transform.localScale = currentView.transform.localScale;
         }
+
         newView.SetState(CardState.Idle);
     }
 }

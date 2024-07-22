@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,21 +7,24 @@ using UnityEngine;
 public class CardViewController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform viewHolder;
     [SerializeField] private CardsManager cardManager;
 
-    private Dictionary<CardInstance, ViewAnchorReference> references = new Dictionary<CardInstance, ViewAnchorReference>();
-    private Dictionary<CardZone, ICardZoneView> zones = new Dictionary<CardZone, ICardZoneView>();
 
     [Header("Views")]
     [SerializeField] private HandView hand;
     [SerializeField] private DeckView deck;
     [SerializeField] private PlayZoneView playZone;
 
-    private List<ICardTransition> transitions = new List<ICardTransition>()
-    {
-        new DefaultCardTransition(),
-    };
+    [Header("Parameters")]
+    [SerializeField] private Transform viewHolder;
+    [SerializeField] private float timeBetweenAnimations;
+
+
+    private List<ICardTransition> transitions;
+    private Dictionary<CardZone, ICardZoneView> zones = new Dictionary<CardZone, ICardZoneView>();
+
+    private bool animating = false;
+    private Queue<IEnumerator> pendingTransitions = new Queue<IEnumerator>();
 
     private void Awake()
     {
@@ -28,7 +32,18 @@ public class CardViewController : MonoBehaviour
         RegisterZoneView(deck);
         RegisterZoneView(playZone);
 
+        RegisterTransitions();
+
         CardEvents.OnCardMoved += OnCardMoved;
+    }
+
+    private void RegisterTransitions()
+    {
+        transitions = GetComponentsInChildren<ICardTransition>().ToList();
+        foreach (var transition in transitions)
+        {
+            transition.Set(this, viewHolder);
+        }
     }
 
     private void OnDestroy()
@@ -47,50 +62,30 @@ public class CardViewController : MonoBehaviour
         ICardZoneView toView = zone2 == null ? null : zones[zone2];
         ICardTransition transition = transitions.FirstOrDefault(t => t.ValidateTransition(fromView, toView));
 
-        if (!references.TryGetValue(instance, out var reference))
+        if (transition == null)
         {
-            reference = new ViewAnchorReference(instance, null, null, viewHolder);
-            references[instance] = reference;
+            throw new Exception($"Failed to evaluate correct transition for card between {zone1} && {zone2}");
         }
 
-        var routine = transition?.Execute(reference, fromView, toView);
-        StartCoroutine(routine);
-    }
-}
-
-public class ViewAnchorReference
-{
-    public ViewAnchorReference(CardInstance card, CardView viewInstance, CardAnchor anchor, Transform holder)
-    {
-        Card = card;
-        ViewInstance = viewInstance;
-        Anchor = anchor;
-        Holder = holder;
-    }
-
-    public CardInstance Card { get; private set; }
-    public CardView ViewInstance { get; private set; }
-    public CardAnchor Anchor { get; private set; }
-    public Transform Holder { get; private set; }
-
-    public void SetNewViewAnchor(CardView view, CardAnchor anchor)
-    {
-        view.transform.SetParent(Holder, true);
+        var routine = transition?.Execute(instance, fromView, toView);
+        pendingTransitions.Enqueue(routine);
         
-        if (ViewInstance != null)
+        if (animating)
         {
-            view.transform.position = ViewInstance.transform.position;
-            view.transform.rotation = ViewInstance.transform.rotation;
-            view.transform.localScale = ViewInstance.transform.localScale;
+            return;
         }
-
-        ViewInstance = view;
-        SetNewAnchor(anchor);
+        StartCoroutine(WaitForTransitionTimeCO());
     }
 
-    public void SetNewAnchor(CardAnchor anchor)
+
+    private IEnumerator WaitForTransitionTimeCO()
     {
-        Anchor = anchor;
-        ViewInstance.SetViewAnchor(anchor);
+        animating = true;
+        while (pendingTransitions.Count > 0)
+        {
+            var nextTransition = pendingTransitions.Dequeue();
+            yield return nextTransition;
+        }
+        animating = false;
     }
 }

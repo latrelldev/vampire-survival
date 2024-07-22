@@ -3,25 +3,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardView : MonoBehaviour
 {
-    public CardAnchor Anchor { get; private set; }
-    private Vector3 targetPos;
-    private bool synced = false;
-
-    [SerializeField] private float followSpeed;
     public CardState State { get; private set; } = CardState.Idle;
+    public CardAnchor Anchor { get; private set; }
+    public ICardZoneView ZoneView { get; private set; }
 
-    public TextMeshPro Text;
+    [SerializeField] private bool synced = false;
+    [SerializeField] private float followSpeed;
+    
+    private Vector3 targetPos;
+    
 
     public void Setup(CardInstance card)
     {
+
     }
 
-    public void SetViewAnchor(CardAnchor anchor)
+    public void SetViewAnchor(CardAnchor anchor, ICardZoneView zone)
     {
         ReleaseAnchor();
 
+        ZoneView = zone;
         Anchor = anchor;
         Anchor.OnCardAnchorChanged += UpdateCardView;
         ResetTargetPos();
@@ -30,6 +33,10 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void SetState(CardState state)
     {
         State = state;
+        if(state == CardState.Idle)
+        {
+            ResetTargetPos();
+        }
     }
 
     private void ReleaseAnchor()
@@ -67,7 +74,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private void UpdateCardView()
     {
-        synced = false;
+        SetUnsynced();
         if(State != CardState.Idle)
         {
             return;
@@ -75,32 +82,21 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         ResetTargetPos();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
 
+    public void ResetTargetPos()
+    {
+        SetTarget(Anchor.transform.position);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        State = CardState.Controlled;
-        synced = false;
-        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
-        pos.z = 0;
-        targetPos = pos;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        State = CardState.Idle;
-        ResetTargetPos();
-    }
-
-    private void ResetTargetPos()
+    public void SetUnsynced()
     {
         synced = false;
-        var pos = Anchor.transform.position;
-        pos.z = 0;
-        targetPos = pos;
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        targetPos = target;
+        SetUnsynced();
     }
 }
 

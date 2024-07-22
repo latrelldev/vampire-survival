@@ -7,11 +7,12 @@ using UnityEngine.EventSystems;
 public class CardZoneView<T> : MonoBehaviour, ICardZoneView where T : CardZone
 {
     [Header("References")]
-    [SerializeField] protected Transform holder;
+    [SerializeField] protected Transform anchorHolder;
+    [SerializeField] protected Transform viewHolder;
     [SerializeField] protected CardViewController viewController;
 
     [Header("Prefabs")]
-    [SerializeField] protected CardView zoneViewPrefab;
+    [SerializeField] protected CardView viewPrefab;
     [SerializeField] protected CardAnchor anchorPrefab;
 
     protected Dictionary<CardInstance, CardAnchor> anchors = new Dictionary<CardInstance, CardAnchor>();
@@ -21,24 +22,26 @@ public class CardZoneView<T> : MonoBehaviour, ICardZoneView where T : CardZone
     {
         if (!anchors.TryGetValue(card, out var anchor))
         {
-            anchor = Instantiate(anchorPrefab, holder);
-            anchor.transform.name += $"({anchors.Count()})";
+            anchor = Instantiate(anchorPrefab, anchorHolder);
+            anchor.transform.name += $"({card.Id})";
             anchor.SetZone(this);
             anchors.Add(card, anchor);
+
+            TryBindViewAnchor(card);
         }
         return anchor;
     }
 
     public virtual CardView GetViewForCard(CardInstance card)
     {
-        if (views.TryGetValue(card, out var view))
+        if (!views.TryGetValue(card, out var view))
         {
-            view = Instantiate(zoneViewPrefab);
-            view.transform.name += $"({views.Count()})";
-            //CardAnchor anchor = anchors[card];
-            view.Text.text = views.Count().ToString();
+            view = Instantiate(viewPrefab, viewHolder);
+            view.transform.name += $"({card.Id})";
             view.Setup(card);
             views.Add(card, view);
+            
+            TryBindViewAnchor(card);
         }
         return view;
     }
@@ -50,7 +53,12 @@ public class CardZoneView<T> : MonoBehaviour, ICardZoneView where T : CardZone
             return;
         }
 
-        //if()
+        if(!views.TryGetValue(card, out var view))
+        {
+            return;
+        }
+
+        view.SetViewAnchor(anchor, this);
     }
 
     public virtual void RemoveCard(CardInstance card, bool destroyView)

@@ -6,5 +6,10 @@ using UnityEngine;
 [Serializable]
 public class CardInstance
 {
+    public CardInstance(int id)
+    {
+        Id = id;
+    }
 
+    public int Id { get; }
 }

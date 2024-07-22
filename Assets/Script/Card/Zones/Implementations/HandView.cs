@@ -12,9 +12,15 @@ public class HandView : CardZoneView<Hand>
     public override CardView GetViewForCard(CardInstance card)
     {
         var view = base.GetViewForCard(card);
-        Debug.Log("1");
         Reorder();
         return view;
+    }
+
+    public override CardAnchor GetAnchorForCard(CardInstance card)
+    {
+        var anchor = base.GetAnchorForCard(card);
+        anchor.transform.SetSiblingIndex(0);
+        return anchor;
     }
 
     public override void RemoveCard(CardInstance card, bool destroyView)
@@ -50,40 +56,38 @@ public class HandView : CardZoneView<Hand>
 
     IEnumerator ReorderCO()
     {
-        Debug.Log("ordering");
+        if (anchors.Count <= 0)
+        {
+            yield break;
+        }
+
         var orderedAnchors = anchors.OrderBy(kvp =>
         {
-            var anchorPos = kvp.Value.transform.position.x;
-            var viewPos = -1f;
-            if (views.TryGetValue(kvp.Key, out var view))
+            if (views.TryGetValue(kvp.Key, out var view) && view.State == CardState.Controlled)
             {
-                viewPos = view.transform.position.x;
-                Debug.Log(1 + ". " + kvp.Value.name + " - " + anchorPos + " - " + viewPos);
                 return view.transform.position.x;
             }
-            Debug.Log(2 + ". " + kvp.Value.name + " - " + anchorPos + " - " + viewPos);
             return kvp.Value.transform.position.x;
         }).ToArray();
-
-        Debug.Log($"First one is: {orderedAnchors.First().Value.name}");
-        yield return null;
 
         for (int i = 0; i < orderedAnchors.Length; i++)
         {
             var anchor = orderedAnchors[i].Value;
             anchor.transform.SetSiblingIndex(i);
-            anchor.RefreshAnchor();
         }
-        Debug.Log($"First child is: {orderedAnchors.First().Value.transform.parent.GetChild(0).name}");
 
-    }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
+        yield return null;
+        
+        
+        for (int i = 0; i < orderedAnchors.Length; i++)
         {
-            Reorder();
+            var anchor = orderedAnchors[i].Value;
+            Debug.Log(anchor.transform.position);
+            var pos = anchor.transform.position;
+            pos.z = orderedAnchors.Length - i;
+            anchor.transform.position = pos;
+            
+            anchor.RefreshAnchor();
         }
     }
 }
