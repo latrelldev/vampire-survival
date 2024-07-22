@@ -30,10 +30,10 @@ public class PlayerAnim : MonoBehaviour
             
         }
 
-        if (shoot.fireCountDown <= 0f) 
-        {
-            animator.SetInteger("Transition", 2);
+        //if (shoot.fireCountDown <= 0f) 
+        //{
+        //    animator.SetInteger("Transition", 2);
            
-        }
+        //}
     }
 }

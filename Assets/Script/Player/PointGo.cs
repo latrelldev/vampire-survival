@@ -15,6 +15,8 @@ public class PointGo : MonoBehaviour
     [SerializeField]
     private Transform body;
 
+    [SerializeField] private Player player;
+
 
     private void Start()
     {
@@ -37,12 +39,8 @@ public class PointGo : MonoBehaviour
         if (moving && (Vector2)transform.position != lastclickposition) 
         {
             var direction = lastclickposition - (Vector2)transform.position;
-            transform.position += (Vector3)direction.normalized * Time.deltaTime * speed;
-
+            transform.position += (speed + player.SpeedModifier) * Time.deltaTime * (Vector3)direction.normalized;
             body.up = direction;
-            //Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            //rb.MovePosition(Time.deltaTime * speed * direction.normalized);
-            //transform.position = Vector2.MoveTowards(transform.position,lastclickposition,step);
         }
         else
         {

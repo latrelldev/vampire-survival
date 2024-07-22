@@ -2,44 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinionLider :MonoBehaviour
+public class MinionLider : MonoBehaviour
 {
-    [SerializeField] private GameObject minionLider;
-    private Player damage;
-    private PointGo speedMinions;
-   
+    [SerializeField] private int speedBuff;
+    [SerializeField] private int powerBuff;
 
+    private List<Player> buffedPlayers = new List<Player>();
 
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        speedMinions = GetComponent<PointGo>();
-        damage = GetComponent<Player>();
-    }
-
-    void Update()
-    {
-        
-        if (minionLider != null)
+        Debug.Log("Trying to buff");
+        var player = collision.gameObject.GetComponent<Player>();
+        if (player != null && !buffedPlayers.Contains(player))
         {
-            speedMinions.speed = speedMinions.speed * 2;
-            damage.bulletDamage = damage.bulletDamage * 2;
-        }
-
-        else
-        {
-            return;
-        }
-
-        if (speedMinions.speed == speedMinions.speed * 2)
-        {
-            return;
-        }
-
-        if (damage.bulletDamage == damage.bulletDamage * 2)
-        {
-            return;
+            Debug.Log("buffing");
+            buffedPlayers.Add(player);
+            player.SpeedModifier += speedBuff;
+            player.PowerModifier += powerBuff;
         }
     }
 
-    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("Trying to debuff");
+        var player = collision.gameObject.GetComponent<Player>();
+        if(player != null && buffedPlayers.Contains(player))
+        {
+            Debug.Log("Debuff");
+            buffedPlayers.Remove(player);
+            player.SpeedModifier -= speedBuff;
+            player.PowerModifier -= powerBuff;
+        }
+    }
 }
