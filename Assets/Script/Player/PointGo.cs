@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class PointGo : MonoBehaviour
 {
     [SerializeField] 
-    private float speed = 10f;
+    public float speed = 10f;
     
     private Vector2 lastclickposition;
     public bool moving;

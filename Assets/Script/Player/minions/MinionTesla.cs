@@ -1,41 +1,25 @@
-﻿using Polarith.AI.Move;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour, IPointerClickHandler
+public class MinionTesla : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
-
+    [SerializeField] private int teslaDamage;
     [SerializeField] private float sensorRange = 5f;
-    [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask mask;
 
     private Vector3[] directions = new Vector3[4];
     private Vector3 finalDir;
 
-    [SerializeField] float fireRate = 1f;
-    public float fireCountDown;
+    private EnemyHealth enemy;
 
-    [SerializeField] private Bullet bulletPrefab;
-    [SerializeField] private Transform firePoint;
     [SerializeField] private Transform body;
 
-    [SerializeField] public int bulletDamage;
-
-    private PlayerManager playerManager;
-
-
-    public void Setup(PlayerManager manager)
+    private void Start()
     {
-        playerManager = manager;
+        enemy = GetComponent<EnemyHealth>();
     }
-
-    private void OnDestroy()
-    {
-        playerManager.RemovePlayer(this);
-    }
-
     private void Update()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(body.position, sensorRange, mask);
@@ -55,29 +39,12 @@ public class Player : MonoBehaviour, IPointerClickHandler
         }
         if (closest != null)
         {
-            var direction = closest.transform.position - body.position;
-
-            body.up = direction;
-
-            if (fireCountDown <= 0f)
-            {
-                Shoot();
-                fireCountDown = 1f / fireRate;
-            }
+            var enemyHealth = GetComponent<EnemyHealth>();
+            enemyHealth.TakeDamage(teslaDamage);
+            Debug.Log("danoInimigo");
 
         }
-
-        fireCountDown -= Time.deltaTime;
     }
-    public void Shoot()
-
-    {
-        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.Set(bulletDamage);
-    }
-
-
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, sensorRange);
@@ -90,10 +57,4 @@ public class Player : MonoBehaviour, IPointerClickHandler
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + finalDir);
     }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
-    }
 }
-
