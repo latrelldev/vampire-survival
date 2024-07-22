@@ -79,17 +79,17 @@ public class CardZoneView<T> : MonoBehaviour, ICardZoneView where T : CardZone
         }
     }
 
-    public virtual void OnBeginCardDrag(CardAnchor cardObject, PointerEventData pointerData)
+    public virtual void OnBeginCardDrag(CardView cardObject, PointerEventData pointerData)
     {
 
     }
 
-    public virtual void OnCardDrag(CardAnchor cardObject, PointerEventData pointerData)
+    public virtual void OnCardDrag(CardView cardObject, PointerEventData pointerData)
     {
 
     }
 
-    public virtual void OnEndCardDrag(CardAnchor cardObject, PointerEventData pointerData)
+    public virtual void OnEndCardDrag(CardView cardObject, PointerEventData pointerData)
     {
 
     }

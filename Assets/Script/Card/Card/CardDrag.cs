@@ -24,6 +24,8 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         offset = Camera.main.ScreenToWorldPoint(eventData.position) - transform.position;
         offset.z = 0;
+
+        view.ZoneView.OnBeginCardDrag(view, eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -36,6 +38,8 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         var pos = Camera.main.ScreenToWorldPoint(eventData.position) - offset;
         pos.z = transform.position.z; //maintain current Z, as that is setup by anchor or custom
         view.SetTarget(pos);
+
+        view.ZoneView.OnCardDrag(view, eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -48,5 +52,6 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         dragging = false;
         view.SetState(CardState.Idle);
         view.ResetTargetPos();
+        view.ZoneView.OnEndCardDrag(view, eventData);
     }
 }

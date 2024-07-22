@@ -29,12 +29,12 @@ public class HandView : CardZoneView<Hand>
         Reorder();
     }
 
-    public override void OnCardDrag(CardAnchor cardObject, PointerEventData pointerData)
+    public override void OnCardDrag(CardView cardObject, PointerEventData pointerData)
     {
         Reorder();
     }
 
-    public override void OnEndCardDrag(CardAnchor cardObject, PointerEventData pointerData)
+    public override void OnEndCardDrag(CardView cardObject, PointerEventData pointerData)
     {
         Reorder();
         var drop = pointerData.hovered.Select(dz => dz.GetComponent<IDropZone>()).FirstOrDefault();
@@ -82,11 +82,10 @@ public class HandView : CardZoneView<Hand>
         for (int i = 0; i < orderedAnchors.Length; i++)
         {
             var anchor = orderedAnchors[i].Value;
-            Debug.Log(anchor.transform.position);
             var pos = anchor.transform.position;
             pos.z = orderedAnchors.Length - i;
+
             anchor.transform.position = pos;
-            
             anchor.RefreshAnchor();
         }
     }
