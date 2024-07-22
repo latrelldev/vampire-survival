@@ -17,7 +17,6 @@ public class CardViewController : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField] private Transform viewHolder;
-    [SerializeField] private float timeBetweenAnimations;
 
 
     private List<ICardTransition> transitions;
@@ -76,7 +75,6 @@ public class CardViewController : MonoBehaviour
         }
         StartCoroutine(WaitForTransitionTimeCO());
     }
-
 
     private IEnumerator WaitForTransitionTimeCO()
     {

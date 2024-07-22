@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CardView : MonoBehaviour
 {
+    public CardInstance Card { get; private set; }
     public CardState State { get; private set; } = CardState.Idle;
     public CardAnchor Anchor { get; private set; }
     public ICardZoneView ZoneView { get; private set; }
@@ -13,11 +14,10 @@ public class CardView : MonoBehaviour
     [SerializeField] private float followSpeed;
     
     private Vector3 targetPos;
-    
 
     public void Setup(CardInstance card)
     {
-
+        Card = card;
     }
 
     public void SetViewAnchor(CardAnchor anchor, ICardZoneView zone)

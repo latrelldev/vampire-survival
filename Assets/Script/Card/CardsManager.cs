@@ -12,7 +12,6 @@ public class CardsManager : MonoBehaviour
     [SerializeField] private Hand hand;
     [SerializeField] private PlayZone playZone;
 
-
     private void Awake()
     {
         RegisterZone(deck);
