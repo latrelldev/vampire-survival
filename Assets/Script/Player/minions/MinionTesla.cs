@@ -1,3 +1,4 @@
+using Polarith.AI.Move;
 using UnityEngine;
 
 public class MinionTesla : MonoBehaviour
@@ -9,6 +10,7 @@ public class MinionTesla : MonoBehaviour
 
     [SerializeField] float fireRate = 1f;
     public float fireCountDown;
+    [SerializeField] float enemyCountDown;
 
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRadius;
@@ -40,6 +42,7 @@ public class MinionTesla : MonoBehaviour
         }
 
         fireCountDown -= Time.deltaTime;
+        enemyCountDown -= Time.deltaTime;
     }
 
     private void OnDrawGizmos()
@@ -61,10 +64,23 @@ public class MinionTesla : MonoBehaviour
                 {
                     enemy.TakeDamager(teslaDamage);
                     Debug.Log("Dano Tesla");
+                   
                 }
             }
         }
 
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (enemyCountDown <= 4f)
+        {
+            GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(false);
+        }
+
+        if (fireCountDown <= 0f)
+        {
+            GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(true);
+        }
     }
 
 }
