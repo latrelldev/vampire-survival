@@ -1,4 +1,5 @@
 using Polarith.AI.Move;
+using System.Linq;
 using UnityEngine;
 
 public class MinionPiromaniaco : MonoBehaviour
@@ -41,35 +42,34 @@ public class MinionPiromaniaco : MonoBehaviour
         }
 
         fireCountDown -= Time.deltaTime;
-        
+
+        var point = transform.position + (body.up * (fireDistance + fireRadius));
+        colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
+        bool hasTarget = false;
+
+        if (fireCountDown <= 0)
+        {
+            foreach (var collider in colliders)
+            {
+                var enemy = collider.gameObject.GetComponent<EnemyHealth>();
+                if (enemy != null)
+                {
+                    hasTarget = true;
+                    enemy.TakeDamage(fireDamage + player.PowerModifier);
+                    Debug.Log("Dano Fire " + (fireDamage + player.PowerModifier));
+                    fireCountDown = 1f / fireRate;
+                }
+            }
+        }
+        //animacao = hasTarget
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, sensorRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + (body.up * (fireDistance + fireRadius)), fireRadius);
     }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (fireCountDown <= 0f)
-        {
-            //pegar posicao do tiro -> posicao do player + (direcao que ele ta olhando * distancia do player)
-            var point = transform.position + (body.up * fireDistance);
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-            foreach (var collider in colliders)
-            {
-                var enemy = collider.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.TakeDamager(fireDamage);
-                    Debug.Log("Dano Fire");
-
-                }
-            }
-        }
-
-    }
-
 }
 
 

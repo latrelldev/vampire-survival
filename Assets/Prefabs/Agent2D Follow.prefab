@@ -289,8 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e70d58036b24a24984d7da099fce630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
   filter: {fileID: 8794202525778633066}
+  controller: {fileID: 4399115286884133634}
+  Stunned: 0
 --- !u!114 &2137337158040679550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +430,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
 --- !u!50 &4605514967250978030
 Rigidbody2D:
   serializedVersion: 4

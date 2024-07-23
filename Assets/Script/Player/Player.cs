@@ -20,7 +20,10 @@ public class Player : MonoBehaviour, IPointerClickHandler
 
     private void OnDestroy()
     {
-        playerManager.RemovePlayer(this);
+        if (playerManager != null)
+        {
+            playerManager.RemovePlayer(this);
+        }
     }
 
 

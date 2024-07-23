@@ -262,16 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  sensorRange: 8
-  moveSpeed: 0
-  mask:
-    serializedVersion: 2
-    m_Bits: 128
-  fireRate: 1
-  bulletPrefab: {fileID: 3641474548757974024, guid: 07c5b31264193394f81d74a1850b7993, type: 3}
-  firePoint: {fileID: 8791479576735203034}
-  body: {fileID: 8355337865676002601}
-  bulletDamage: 8
+  PowerModifier: 0
+  SpeedModifier: 0
+  LifeModifier: 0
 --- !u!114 &2557006815728014374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +278,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  moving: 0
   body: {fileID: 8355337865676002601}
+  player: {fileID: 6215764445394369344}
 --- !u!114 &1571368723996371449
 MonoBehaviour:
   m_ObjectHideFlags: 0

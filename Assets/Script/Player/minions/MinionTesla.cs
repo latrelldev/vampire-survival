@@ -5,16 +5,16 @@ public class MinionTesla : MonoBehaviour
 {
     [SerializeField] private LayerMask mask;
     [SerializeField] private float sensorRange = 5f;
-    [SerializeField] private int teslaDamage;
+    [SerializeField] private int fireDamage;
     [SerializeField] private Transform body;
 
     [SerializeField] float fireRate = 1f;
     public float fireCountDown;
-    [SerializeField] float enemyCountDown;
 
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRadius;
     [SerializeField] private float fireDistance;
+    [SerializeField] private float stunTime;
 
     [SerializeField] private Player player;
 
@@ -42,55 +42,34 @@ public class MinionTesla : MonoBehaviour
         }
 
         fireCountDown -= Time.deltaTime;
-        enemyCountDown -= Time.deltaTime;
+
+        var point = transform.position + (body.up * (fireDistance + fireRadius));
+        colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
+        bool hasTarget = false;
+
+        if (fireCountDown <= 0)
+        {
+            foreach (var collider in colliders)
+            {
+                var enemy = collider.gameObject.GetComponent<EnemyHealth>();
+                if (enemy != null)
+                {
+                    hasTarget = true;
+                    enemy.TakeDamage(fireDamage + player.PowerModifier);
+                    Debug.Log("Dano Tesla" + (fireDamage + player.PowerModifier));
+                    fireCountDown = 1f / fireRate;
+                    enemy.GetComponent<Enemy>().Stun(stunTime);
+                }
+            }
+        }
+        //animacao = hasTarget
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, sensorRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + (body.up * (fireDistance + fireRadius)), fireRadius);
     }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (fireCountDown <= 0f)
-        {
-            //pegar posicao do tiro -> posicao do player + (direcao que ele ta olhando * distancia do player)
-            var point = transform.position + (body.up * fireDistance);
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-            foreach(var collider in colliders)
-            {
-                var enemy = collider.gameObject.GetComponent<Enemy>();
-                if(enemy != null)
-                {
-                    enemy.TakeDamager(teslaDamage);
-                    Debug.Log("Dano Tesla");
-                   
-                }
-            }
-        }
-
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
-        var enemy = GetComponent<Collider>().gameObject.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            if (enemyCountDown == 4f)
-            {
-                GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(false);
-            }
-
-            if (enemyCountDown <= 0f)
-            {
-                GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(true);
-            }
-        }
-
-    }
-
 }
-
-
-
 

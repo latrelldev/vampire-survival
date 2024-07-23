@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -35,4 +36,5 @@ public class EnemyHealth : MonoBehaviour
             _currentHealth = 0;
         }
     }
+
 }

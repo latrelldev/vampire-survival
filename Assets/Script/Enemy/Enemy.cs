@@ -1,12 +1,16 @@
 ﻿using Polarith.AI.Move;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int health = 5;
-    [SerializeField]
     private AIMSteeringFilter filter;
+    [SerializeField]
+    private AIMSimpleController2D controller;
+
+    private float stunTime = 0;
+    public bool Stunned;
 
     public void Setup(AIMSteeringPerceiver perceiver)
     {
@@ -16,14 +20,30 @@ public class Enemy : MonoBehaviour
         //Debug.Log(filter.SteeringPerceiver);
     }
 
-    public void TakeDamager(int value)
+
+    public void Stun(float stunTime)
     {
-        health -= value;
-        if (health < 0)
+        if (this.stunTime < stunTime)
         {
-            Destroy(gameObject);
+            Stunned = true;
+            controller.enabled = false;
+            this.stunTime = stunTime;
+        }
+    }
+
+    private void Update()
+    {
+        if (!Stunned)
+        {
+            return;
         }
 
+        stunTime -= Time.deltaTime;
+        if (stunTime <= 0)
+        {
+            controller.enabled = true;
+            Stunned = false;
+        }
     }
 }
 
