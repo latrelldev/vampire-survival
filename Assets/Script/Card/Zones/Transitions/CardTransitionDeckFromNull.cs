@@ -14,11 +14,11 @@ public class CardTransitionDeckFromNull: CardTransition<ICardZoneView, DeckView>
         yield return null; //wait a frame so layout accounts for anchor
         CardView newView = to.GetViewForCard(card);
         newView.SetState(CardState.Animating);
-        newView.transform.position = newAnchor.transform.position;
+
+        newView.ResetCurrentPos();
+
         newView.transform.rotation = newAnchor.transform.rotation;
         newView.transform.localScale = newAnchor.transform.localScale;
-
-        Debug.Log(newView.transform.position);
 
         for (int i = 0; i < 100; i++)
         {

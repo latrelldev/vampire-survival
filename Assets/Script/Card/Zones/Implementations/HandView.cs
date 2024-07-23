@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,11 +38,26 @@ public class HandView : CardZoneView<Hand>
     public override void OnEndCardDrag(CardView cardObject, PointerEventData pointerData)
     {
         Reorder();
-        var drop = pointerData.hovered.Select(dz => dz.GetComponent<IDropZone>()).FirstOrDefault();
-        if (drop != null)
+
+        //var drops = GetPossibleDrops(pointerData);
+        foreach(var hov in pointerData.hovered)
         {
-            Debug.Log("Trying to drop at " + drop);
+            Debug.Log(hov.name);
         }
+        var drops = pointerData.hovered.Select(d => d.GetComponent<IDropZone>()).Where(d => d != null).ToList();
+        if (drops != null && drops.Count > 0)
+        {
+            Debug.Log("Trying to drop at " + (drops[0] as MonoBehaviour).name);
+        }
+    }
+
+    private List<IDropZone> GetPossibleDrops(PointerEventData pointer)
+    {
+        var newPointer = new PointerEventData(EventSystem.current);
+        newPointer.position = pointer.position;
+        var hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(newPointer, hits);
+        return hits.Select(h => h.gameObject.GetComponent<IDropZone>()).Where(d => d != null).ToList();
     }
 
     private void Reorder()
@@ -83,7 +99,9 @@ public class HandView : CardZoneView<Hand>
         {
             var anchor = orderedAnchors[i].Value;
             var pos = anchor.transform.position;
-            pos.z = orderedAnchors.Length - i;
+           
+            //pos.z = anchor.transform.parent.position.z + (orderedAnchors.Length - i);
+            //Debug.Log(pos.z);
 
             anchor.transform.position = pos;
             anchor.RefreshAnchor();

@@ -47,31 +47,6 @@ public class CardView : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        ReleaseAnchor();
-    }
-
-    private void Update()
-    {
-        if (synced)
-        {
-            return;
-        }
-
-        if(Mathf.Approximately(Vector3.Distance(targetPos, transform.position), 0))
-        {
-            synced = true;
-            return;
-        }
-
-        var direction = targetPos - transform.position;
-        var moveVector = followSpeed * Time.deltaTime * direction.normalized;
-        moveVector = Vector3.ClampMagnitude(moveVector, direction.magnitude);
-
-        transform.position += moveVector;
-    }
-
     private void UpdateCardView()
     {
         SetUnsynced();
@@ -82,10 +57,17 @@ public class CardView : MonoBehaviour
         ResetTargetPos();
     }
 
-
     public void ResetTargetPos()
     {
-        SetTarget(Anchor.transform.position);
+        var pos = Anchor.transform.position;
+        pos.z = Anchor.transform.GetSiblingIndex();
+        SetTarget(pos);
+    }
+
+    public void ResetCurrentPos()
+    {
+        ResetTargetPos();
+        transform.position = targetPos;
     }
 
     public void SetUnsynced()
@@ -98,5 +80,32 @@ public class CardView : MonoBehaviour
         targetPos = target;
         SetUnsynced();
     }
+
+    private void Update()
+    {
+        if (synced)
+        {
+            return;
+        }
+
+        if (Mathf.Approximately(Vector3.Distance(targetPos, transform.position), 0))
+        {
+            synced = true;
+            return;
+        }
+
+        var direction = targetPos - transform.position;
+        var moveVector = followSpeed * Time.deltaTime * direction.normalized;
+        moveVector = Vector3.ClampMagnitude(moveVector, direction.magnitude);
+
+        transform.position += moveVector;
+    }
+
+
+    private void OnDestroy()
+    {
+        ReleaseAnchor();
+    }
+
 }
 
