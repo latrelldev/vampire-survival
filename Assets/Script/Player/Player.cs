@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IPointerClickHandler
 
     public int PowerModifier;
     public int SpeedModifier;
+    public int LifeModifier;
 
     public void Setup(PlayerManager manager)
     {

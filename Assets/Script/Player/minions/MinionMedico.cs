@@ -1,21 +1,25 @@
 using Polarith.AI.Move;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MinionPiromaniaco : MonoBehaviour
+public class MinionMedico : MonoBehaviour
 {
     [SerializeField] private LayerMask mask;
     [SerializeField] private float sensorRange = 5f;
-    [SerializeField] private int fireDamage;
     [SerializeField] private Transform body;
 
-    [SerializeField] float fireRate = 1f;
     public float fireCountDown;
+    [SerializeField] float enemyCountDown;
 
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRadius;
     [SerializeField] private float fireDistance;
+    [SerializeField] private int lifeBuff;
 
     [SerializeField] private Player player;
+
+    private List<Player> buffedPlayers = new List<Player>();
 
     private void Update()
     {
@@ -40,8 +44,7 @@ public class MinionPiromaniaco : MonoBehaviour
             body.up = direction;
         }
 
-        fireCountDown -= Time.deltaTime;
-        
+      
     }
 
     private void OnDrawGizmos()
@@ -51,27 +54,25 @@ public class MinionPiromaniaco : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (fireCountDown <= 0f)
+        Debug.Log("Trying to buff life");
+        var player = collision.gameObject.GetComponent<Player>();
+        if (player != null && !buffedPlayers.Contains(player))
         {
-            //pegar posicao do tiro -> posicao do player + (direcao que ele ta olhando * distancia do player)
-            var point = transform.position + (body.up * fireDistance);
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-            foreach (var collider in colliders)
-            {
-                var enemy = collider.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.TakeDamager(fireDamage);
-                    Debug.Log("Dano Fire");
-
-                }
-            }
+            Debug.Log("buffing life");
+            buffedPlayers.Add(player);
+            player.LifeModifier += lifeBuff;
+            
         }
-
     }
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("Trying to debuff life");
+        var player = collision.gameObject.GetComponent<Player>();
+        if (player != null && buffedPlayers.Contains(player))
+        {
+            Debug.Log("Debuff life");
+            buffedPlayers.Remove(player);
+            player.LifeModifier += lifeBuff;
+        }
+    }
 }
-
-
-
-

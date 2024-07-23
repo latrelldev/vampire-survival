@@ -72,15 +72,21 @@ public class MinionTesla : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (enemyCountDown <= 4f)
+
+        var enemy = GetComponent<Collider>().gameObject.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(false);
+            if (enemyCountDown == 4f)
+            {
+                GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(false);
+            }
+
+            if (enemyCountDown <= 0f)
+            {
+                GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(true);
+            }
         }
 
-        if (fireCountDown <= 0f)
-        {
-            GetComponent<AIMSteeringPerceiver>().gameObject.SetActive(true);
-        }
     }
 
 }
