@@ -532,6 +532,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_Radius
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6197341672575541930, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_Name
       value: MinionPiromaniaco
@@ -550,11 +566,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.484013
+      value: -13.8
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.3928585
+      value: -12.82
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -586,6 +602,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355337865676002601, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355337865676002601, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1671,7 +1695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1390781846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,13 +2003,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_Radius
+      value: 0.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432163336593529632, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6197341672575541930, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_Name
       value: MinionTesla
       objectReference: {fileID: 0}
     - target: {fileID: 6197341672575541930, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6215764445394369344, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_Enabled
@@ -2005,11 +2041,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.484013
+      value: -12.74
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.3928585
+      value: -11.98
       objectReference: {fileID: 0}
     - target: {fileID: 7974858835806588400, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2081,12 +2117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154501afee5f4b64fb4c94f33b22bbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teslaDamage: 10
-  sensorRange: 5
   mask:
     serializedVersion: 2
     m_Bits: 128
+  sensorRange: 1.99
+  teslaDamage: 10
   body: {fileID: 1596002880}
+  fireRate: 1
+  fireCountDown: 0
+  firePoint: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &1596002883
 MonoBehaviour:
   m_ObjectHideFlags: 0
