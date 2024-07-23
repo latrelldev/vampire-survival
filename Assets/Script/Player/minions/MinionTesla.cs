@@ -11,6 +11,8 @@ public class MinionTesla : MonoBehaviour
     public float fireCountDown;
 
     [SerializeField] private Transform firePoint;
+    [SerializeField] private float fireRadius;
+    [SerializeField] private float fireDistance;
 
     [SerializeField] private Player player;
 
@@ -34,9 +36,7 @@ public class MinionTesla : MonoBehaviour
         if (closest != null)
         {
             var direction = closest.transform.position - transform.position;
-
             body.up = direction;
-
         }
 
         fireCountDown -= Time.deltaTime;
@@ -51,15 +51,20 @@ public class MinionTesla : MonoBehaviour
     {
         if (fireCountDown <= 0f)
         {
-            if (collision.tag == "Inimigo")
+            //pegar posicao do tiro -> posicao do player + (direcao que ele ta olhando * distancia do player)
+            var point = transform.position + (body.up * fireDistance);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
+            foreach(var collider in colliders)
             {
-                var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-                enemyHealth.TakeDamage(teslaDamage);
-                Debug.Log("danoTesla");
-
+                var enemy = collider.gameObject.GetComponent<Enemy>();
+                if(enemy != null)
+                {
+                    enemy.TakeDamager(teslaDamage);
+                    Debug.Log("Dano Tesla");
+                }
             }
         }
-        
+
     }
 
 }
