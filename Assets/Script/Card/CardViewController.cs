@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CardViewController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CardsManager cardManager;
-
 
     [Header("Views")]
     [SerializeField] private HandView hand;
@@ -23,16 +23,21 @@ public class CardViewController : MonoBehaviour
     private bool animating = false;
     private Queue<IEnumerator> pendingTransitions = new Queue<IEnumerator>();
 
-    private void Awake()
+    public void Setup()
     {
+        CardEvents.OnCardMoved += OnCardMoved;
+        
+        RegisterTransitions();
+
         RegisterZoneView(hand);
         RegisterZoneView(deck);
         RegisterZoneView(playZone);
         RegisterZoneView(discard);
+    }
 
-        RegisterTransitions();
-
-        CardEvents.OnCardMoved += OnCardMoved;
+    public void OnDestroy()
+    {
+        CardEvents.OnCardMoved -= OnCardMoved;
     }
 
     private void RegisterTransitions()
@@ -42,11 +47,6 @@ public class CardViewController : MonoBehaviour
         {
             transition.Set(this);
         }
-    }
-
-    private void OnDestroy()
-    {
-        CardEvents.OnCardMoved -= OnCardMoved;
     }
 
     private void RegisterZoneView<T>(CardZoneView<T> view) where T : CardZone

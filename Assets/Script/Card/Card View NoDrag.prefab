@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7838197043940563654, guid: d7d5e940e0756a34e9d9521dbc003842, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838197043940563654, guid: d7d5e940e0756a34e9d9521dbc003842, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 217312533
+      objectReference: {fileID: 0}
     - target: {fileID: 9091247872262545479, guid: d7d5e940e0756a34e9d9521dbc003842, type: 3}
       propertyPath: m_Name
       value: Card View NoDrag

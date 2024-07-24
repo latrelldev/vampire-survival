@@ -15,16 +15,23 @@ public class CardsManager : MonoBehaviour
 
     [SerializeField] private List<CardData> StartingCards = new List<CardData>();
 
-    private void Awake()
+    private GameManager gameManager;
+
+    public void Setup(GameManager manager)
     {
         RegisterZone(deck);
         RegisterZone(hand);
         RegisterZone(playZone);
         RegisterZone(discard);
+
+        gameManager = manager;
+        gameManager.OnGameStarted += OnGameStarted;
     }
 
-    private void Start()
+    private void OnGameStarted()
     {
+        gameManager.OnGameStarted -= OnGameStarted;
+
         List<CardInstance> cards = StartingCards.Select(cd => new CardInstance(cd.card)).ToList();
         Setup(cards);
     }

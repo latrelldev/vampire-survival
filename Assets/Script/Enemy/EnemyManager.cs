@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
     [SerializeField] private Transform holder;
     public List<Enemy> Enemies = new List<Enemy>();
 
     [SerializeField] private AIMSteeringPerceiver perceiver;
 
-    private void Start()
+    private GameManager gameManager;
+    
+    public void Setup(GameManager manager)
     {
+        gameManager = manager;
         Enemies = GetComponentsInChildren<Enemy>().ToList();
         foreach (Enemy enemy in Enemies)
         {

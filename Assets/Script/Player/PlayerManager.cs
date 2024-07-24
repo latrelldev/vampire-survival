@@ -10,31 +10,13 @@ public class PlayerManager: MonoBehaviour
     public List<Player> Players = new List<Player>();
     [SerializeField] private AIMEnvironment playerEnv;
 
-    private void Awake()
+    public void Setup()
     {
         Players = GetComponentsInChildren<Player>().ToList();
+        playerAlive = Players.Count > 0;
         foreach (Player player in Players)
         {
             player.Setup(this);
-        }
-    }
-    public void Start()
-    {
-        if (Players.Count == 0)
-        {
-            playerAlive = false;
-            Debug.Log("JogoNaoComeçou");
-
-        }
-        else
-        {
-            playerAlive = true;
-            Debug.Log("JogoComeçou");
-        }
-
-        if(Players.Count == 0 && playerAlive == true)
-        {
-            GameOver();
         }
     }
 
@@ -43,21 +25,26 @@ public class PlayerManager: MonoBehaviour
         Player player = Instantiate(playerPrefab, transform);
         Players.Add(player);
         player.Setup(this);
+        playerAlive = true;
         playerEnv.UpdateLayerGameObjects();
     }
 
     public void RemovePlayer(Player player)
     {
         Players.Remove(player);
-    
+        if (Players.Count == 0 && playerAlive == true)
+        {
+            playerAlive = false;
+            GameOver();
+        }
     }
 
     public void GameOver()
     {
         if (Players.Count == 0)
         {
-            SceneManager.LoadScene("GameOver");
             Debug.Log("GameOver");
+            SceneManager.LoadScene("GameOver");
         }
     }
 

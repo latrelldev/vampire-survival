@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8295745190854593637}
   - component: {fileID: 3475781180990242084}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arte
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8648106947352077441}
   - component: {fileID: 6048552668699269006}
   - component: {fileID: 6821202681167496906}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Efeito
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6265378465000398037}
   - component: {fileID: 968518291217367126}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 8215048519229422304}
   - component: {fileID: 5743801225288717635}
   - component: {fileID: 3607174976128970140}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 6109505695374286196}
   - component: {fileID: 3625300835218612224}
   - component: {fileID: 8786108082697887156}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 7838197043940563654}
   - component: {fileID: 8808717157440569645}
   - component: {fileID: 1932847644671732350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Card View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,8 +789,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9091247872262545479}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 217312533
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!114 &8808717157440569645
