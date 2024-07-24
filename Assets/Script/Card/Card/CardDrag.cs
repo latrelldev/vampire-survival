@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private CardView view;
+    [SerializeField] private SortingGroup sorting;
 
     private Vector3 offset;
     private bool dragging = false;
@@ -21,6 +23,8 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         dragging = true;
         view.SetState(CardState.Controlled);
+
+        sorting.sortingOrder += 1;
 
         offset = Camera.main.ScreenToWorldPoint(eventData.position) - transform.position;
         offset.z = 0;
@@ -48,6 +52,8 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             return;
         }
+
+        sorting.sortingOrder -= 1;
 
         dragging = false;
         view.SetState(CardState.Idle);

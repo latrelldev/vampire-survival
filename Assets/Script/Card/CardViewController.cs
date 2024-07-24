@@ -14,13 +14,11 @@ public class CardViewController : MonoBehaviour
     [SerializeField] private HandView hand;
     [SerializeField] private DeckView deck;
     [SerializeField] private PlayZoneView playZone;
-
-    [Header("Parameters")]
-    [SerializeField] private Transform viewHolder;
-
+    [SerializeField] private DiscardView discard;
 
     private List<ICardTransition> transitions;
     private Dictionary<CardZone, ICardZoneView> zones = new Dictionary<CardZone, ICardZoneView>();
+    private Dictionary<CardInstance, ICardZoneView> cardLookup = new Dictionary<CardInstance, ICardZoneView>();
 
     private bool animating = false;
     private Queue<IEnumerator> pendingTransitions = new Queue<IEnumerator>();
@@ -30,6 +28,7 @@ public class CardViewController : MonoBehaviour
         RegisterZoneView(hand);
         RegisterZoneView(deck);
         RegisterZoneView(playZone);
+        RegisterZoneView(discard);
 
         RegisterTransitions();
 
@@ -41,7 +40,7 @@ public class CardViewController : MonoBehaviour
         transitions = GetComponentsInChildren<ICardTransition>().ToList();
         foreach (var transition in transitions)
         {
-            transition.Set(this, viewHolder);
+            transition.Set(this);
         }
     }
 
@@ -59,8 +58,9 @@ public class CardViewController : MonoBehaviour
     {
         ICardZoneView fromView = zone1 == null ? null : zones[zone1];
         ICardZoneView toView = zone2 == null ? null : zones[zone2];
+        cardLookup[instance] = toView;
+        
         ICardTransition transition = transitions.FirstOrDefault(t => t.ValidateTransition(fromView, toView));
-
         if (transition == null)
         {
             throw new Exception($"Failed to evaluate correct transition for card between {zone1} && {zone2}");
@@ -68,7 +68,7 @@ public class CardViewController : MonoBehaviour
 
         var routine = transition?.Execute(instance, fromView, toView);
         pendingTransitions.Enqueue(routine);
-        
+
         if (animating)
         {
             return;
@@ -85,5 +85,23 @@ public class CardViewController : MonoBehaviour
             yield return nextTransition;
         }
         animating = false;
+    }
+
+    public void MoveCard(CardInstance card, ICardZoneView from, ICardZoneView to)
+    {
+
+    }
+
+    public void MoveCard<TZone>(CardInstance card) where TZone: CardZone
+    {
+        if (!cardLookup.TryGetValue(card, out var fromView))
+        {
+            throw new Exception("Card was not found on any zone view");
+        }
+
+        CardZone fromZone = zones.FirstOrDefault(kvp => kvp.Value == fromView).Key;
+        CardZone toZone = cardManager.GetZone<TZone>();
+
+        cardManager.MoveCard(card, fromZone, toZone);
     }
 }

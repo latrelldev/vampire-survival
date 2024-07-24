@@ -1,5 +1,4 @@
 ﻿public interface IDropZone
 {
-    public void OnCardDrop(CardAnchor cardObject, ICardZoneView from);
+    public void OnCardDrop(CardInstance card, ICardZoneView from);
 }
-

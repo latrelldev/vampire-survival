@@ -6,10 +6,12 @@ using UnityEngine;
 [Serializable]
 public class CardInstance
 {
-    public CardInstance(int id)
+    public CardInstance(Card card)
     {
-        Id = id;
+        Card = card;
+        Id = card.Id;
     }
 
-    public int Id { get; }
+    public Card Card { get; set; }
+    public string Id { get; }
 }

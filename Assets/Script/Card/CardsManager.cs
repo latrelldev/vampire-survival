@@ -11,25 +11,21 @@ public class CardsManager : MonoBehaviour
     [SerializeField] private Deck deck;
     [SerializeField] private Hand hand;
     [SerializeField] private PlayZone playZone;
+    [SerializeField] private Discard discard;
+
+    [SerializeField] private List<CardData> StartingCards = new List<CardData>();
 
     private void Awake()
     {
         RegisterZone(deck);
         RegisterZone(hand);
         RegisterZone(playZone);
+        RegisterZone(discard);
     }
 
     private void Start()
     {
-        List<CardInstance> cards = new List<CardInstance>()
-        {
-            new CardInstance(1),
-            new CardInstance(2),
-            new CardInstance(3),
-            new CardInstance(4),
-            new CardInstance(5),
-        };
-
+        List<CardInstance> cards = StartingCards.Select(cd => new CardInstance(cd.card)).ToList();
         Setup(cards);
     }
 

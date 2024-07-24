@@ -12,7 +12,6 @@ public class CardTransitionFromNull: CardTransition<ICardZoneView, ICardZoneView
         CardAnchor newAnchor = to.GetAnchorForCard(card);
         yield return null; //wait a frame so layout accounts for anchor
         CardView newView = to.GetViewForCard(card);
-        newView.transform.SetParent(holder, true);
 
         newView.transform.position = newAnchor.transform.position;
         newView.transform.rotation = newAnchor.transform.rotation;

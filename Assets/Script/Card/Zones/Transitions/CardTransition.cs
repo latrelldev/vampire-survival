@@ -4,12 +4,10 @@ using UnityEngine;
 public abstract class CardTransition<TFrom, TTo> : MonoBehaviour, ICardTransition where TFrom : ICardZoneView where TTo : ICardZoneView
 {
     protected CardViewController viewController;
-    protected Transform holder;
 
-    public void Set(CardViewController cardViewController, Transform viewHolder)
+    public void Set(CardViewController cardViewController)
     {
         viewController = cardViewController;
-        holder = viewHolder;
     }
 
 

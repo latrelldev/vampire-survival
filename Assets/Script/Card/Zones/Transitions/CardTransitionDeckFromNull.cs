@@ -20,7 +20,7 @@ public class CardTransitionDeckFromNull: CardTransition<ICardZoneView, DeckView>
         newView.transform.rotation = newAnchor.transform.rotation;
         newView.transform.localScale = newAnchor.transform.localScale;
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 30; i++)
         {
             newView.transform.localScale *= 1.01f;
             yield return null;

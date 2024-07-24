@@ -39,24 +39,17 @@ public class HandView : CardZoneView<Hand>
     {
         Reorder();
 
-        //var drops = GetPossibleDrops(pointerData);
-        foreach(var hov in pointerData.hovered)
-        {
-            Debug.Log(hov.name);
-        }
-        var drops = pointerData.hovered.Select(d => d.GetComponent<IDropZone>()).Where(d => d != null).ToList();
+        var drops = GetPossibleDrops(pointerData);
         if (drops != null && drops.Count > 0)
         {
-            Debug.Log("Trying to drop at " + (drops[0] as MonoBehaviour).name);
+            drops[0].OnCardDrop(cardObject.Card, this);
         }
     }
 
     private List<IDropZone> GetPossibleDrops(PointerEventData pointer)
     {
-        var newPointer = new PointerEventData(EventSystem.current);
-        newPointer.position = pointer.position;
         var hits = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(newPointer, hits);
+        EventSystem.current.RaycastAll(pointer, hits);
         return hits.Select(h => h.gameObject.GetComponent<IDropZone>()).Where(d => d != null).ToList();
     }
 
