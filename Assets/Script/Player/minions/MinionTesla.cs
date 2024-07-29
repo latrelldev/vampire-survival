@@ -17,6 +17,7 @@ public class MinionTesla : MonoBehaviour
     [SerializeField] private float stunTime;
 
     [SerializeField] private Player player;
+    private bool hasTarget = false;
 
     private void Update()
     {
@@ -45,7 +46,7 @@ public class MinionTesla : MonoBehaviour
 
         var point = transform.position + (body.up * (fireDistance + fireRadius));
         colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-        bool hasTarget = false;
+        
 
         if (fireCountDown <= 0)
         {

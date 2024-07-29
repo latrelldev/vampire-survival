@@ -7,10 +7,9 @@ public class MedicoTeste : MonoBehaviour
 {
     [SerializeField] private LayerMask mask;
     [SerializeField] private float sensorRange = 5f;
-    [SerializeField] private int fireDamage;
+   
     [SerializeField] private Transform body;
 
-    [SerializeField] float fireRate = 1f;
     public float fireCountDown;
 
     [SerializeField] private Transform firePoint;
@@ -22,8 +21,8 @@ public class MedicoTeste : MonoBehaviour
 
     private void Update()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sensorRange, mask);
-
+        var point = transform.position + (body.up * (fireDistance + fireRadius));
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
         Collider2D closest = null;
         float minDistance = 999;
 
@@ -45,9 +44,7 @@ public class MedicoTeste : MonoBehaviour
 
         fireCountDown -= Time.deltaTime;
 
-        var point = transform.position + (body.up * (fireDistance + fireRadius));
-        colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-        bool hasTarget = false;
+        //bool hasTarget = false;
 
         if (fireCountDown <= 0)
         {
