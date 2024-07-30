@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 494423222}
   - component: {fileID: 494423221}
   - component: {fileID: 494423224}
+  - component: {fileID: 494423226}
   - component: {fileID: 494423225}
   m_Layer: 0
   m_Name: Main Camera
@@ -787,6 +788,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2105183409}
+--- !u!114 &494423226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494423220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a46124829feda45b7997c1e5f020cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSpeed: 1
 --- !u!4 &511178153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 773663673039329927, guid: f208b0aa066763d448606ab1e278c170, type: 3}
@@ -863,6 +877,10 @@ PrefabInstance:
     - target: {fileID: 6967669228252034122, guid: 3e08dedd3b4e7bd4bb1383e0dcdde269, type: 3}
       propertyPath: m_Name
       value: SteeringPerceiver
+      objectReference: {fileID: 0}
+    - target: {fileID: 6967669228252034122, guid: 3e08dedd3b4e7bd4bb1383e0dcdde269, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1309,7 +1327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6197341672575541930, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6215764445394369344, guid: 270a17074fc879d4dba2275d8b4984c4, type: 3}
       propertyPath: gameManager
@@ -1485,7 +1503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1390781846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2080,7 +2098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7951943411307249025, guid: 818efc2faf5ece248bb0fa7a1115cddd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7991552946282314329, guid: 818efc2faf5ece248bb0fa7a1115cddd, type: 3}
       propertyPath: m_Layer
@@ -2151,7 +2169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1905350477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,7 +2717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5187203066583534074, guid: 519cdd0068bf9a146a1695ccd60d722c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9174297558434145952, guid: 519cdd0068bf9a146a1695ccd60d722c, type: 3}
       propertyPath: m_LocalPosition.x
