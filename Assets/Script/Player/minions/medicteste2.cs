@@ -1,23 +1,22 @@
-using Polarith.AI.Move;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
-public class MinionPiromaniaco : MonoBehaviour
+public class MedicoTeste2 : MonoBehaviour
 {
     [SerializeField] private LayerMask mask;
     [SerializeField] private float sensorRange = 5f;
-    [SerializeField] private int fireDamage;
     [SerializeField] private Transform body;
 
-    [SerializeField] float fireRate = 1f;
     public float fireCountDown;
 
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRadius;
     [SerializeField] private float fireDistance;
+    [SerializeField] private float lifeAmount;
 
     [SerializeField] private Player player;
-    private bool hasTarget = false;
 
     private void Update()
     {
@@ -25,6 +24,7 @@ public class MinionPiromaniaco : MonoBehaviour
 
         Collider2D closest = null;
         float minDistance = 999;
+        fireCountDown -= Time.deltaTime;
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -34,34 +34,23 @@ public class MinionPiromaniaco : MonoBehaviour
                 minDistance = distance;
                 closest = colliders[i];
             }
-
         }
-        if (closest != null)
-        {
-            var direction = closest.transform.position - transform.position;
-            body.up = direction;
-        }
-
-        fireCountDown -= Time.deltaTime;
-
-        var point = transform.position + (body.up * (fireDistance + fireRadius));
-        colliders = Physics2D.OverlapCircleAll(point, fireRadius, mask);
-       
-
-        if (fireCountDown <= 0)
+        
+        if(fireCountDown<=0)
         {
             foreach (var collider in colliders)
             {
-                var enemy = collider.gameObject.GetComponent<EnemyHealth>();
-                if (enemy != null)
+                var player = collider.gameObject.GetComponent<PlayerHealth>();
+                if (closest != null)
                 {
-                    hasTarget = true;
-                    enemy.TakeDamage(fireDamage + player.PowerModifier);
-                    Debug.Log("Dano Fire " + (fireDamage + player.PowerModifier));
-                    fireCountDown = 1f / fireRate;
+                    var direction = closest.transform.position - transform.position;
+                    body.up = direction;
+                    player.AddHealth(lifeAmount);
                 }
             }
         }
+        //bool hasTarget = false;
+
         //animacao = hasTarget
     }
 
@@ -72,7 +61,3 @@ public class MinionPiromaniaco : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + (body.up * (fireDistance + fireRadius)), fireRadius);
     }
 }
-
-
-
-
