@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public SpriteRenderer sprite;
 
-    public void Update()
+    public void Debug(string msg)
     {
-        sprite.material.mainTextureOffset += Vector2.one * Time.deltaTime * 5;
+        UnityEngine.Debug.Log(msg);
     }
 
 }

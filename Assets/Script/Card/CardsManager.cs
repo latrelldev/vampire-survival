@@ -7,6 +7,7 @@ using UnityEngine;
 public class CardsManager : MonoBehaviour
 {
     private Dictionary<Type, CardZone> zones = new Dictionary<Type, CardZone>();
+    private Dictionary<CardInstance, CardZone> cardLookup = new Dictionary<CardInstance, CardZone>();
 
     [SerializeField] private Deck deck;
     [SerializeField] private Hand hand;
@@ -17,6 +18,7 @@ public class CardsManager : MonoBehaviour
 
     private GameManager gameManager;
 
+
     public void Setup(GameManager manager)
     {
         RegisterZone(deck);
@@ -26,6 +28,8 @@ public class CardsManager : MonoBehaviour
 
         gameManager = manager;
         gameManager.OnGameStarted += OnGameStarted;
+
+        CardEvents.OnCardPlayed += OnCardPlayed;
     }
 
     private void OnGameStarted()
@@ -76,6 +80,19 @@ public class CardsManager : MonoBehaviour
         }
     }
 
+    private void OnCardPlayed(CardInstance instance)
+    {
+        Debug.Log("Played");
+        if(gameManager.PlayerStatus.Resources >= instance.Card.Cost)
+        {
+            gameManager.PlayerStatus.Resources -= instance.Card.Cost;
+
+            CardZone from = cardLookup[instance];
+            instance.Card.OnCardPlayed(this);
+            MoveCard(instance, from, discard);
+        }
+    }
+
     public void MoveCard(CardInstance card, CardZone from, CardZone to)
     {
         if (from != null)
@@ -88,6 +105,7 @@ public class CardsManager : MonoBehaviour
             to.AddCard(card);
         }
 
+        cardLookup[card] = to;
         CardEvents.OnCardMoved(card, from, to);
     }
 }
@@ -95,4 +113,6 @@ public class CardsManager : MonoBehaviour
 public static class CardEvents
 {
     public static Action<CardInstance, CardZone, CardZone> OnCardMoved = delegate { };
+
+    public static Action<CardInstance> OnCardPlayed = delegate { };
 }

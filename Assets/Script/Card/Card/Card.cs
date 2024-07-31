@@ -22,7 +22,7 @@ public abstract class Card
     [SerializeField] private int upgradeCost;
 
 
-    public abstract void OnCardPlayed();
+    public abstract void OnCardPlayed(CardsManager manager);
 }
 
 
@@ -30,7 +30,7 @@ public class MinionSpawnCard : Card
 {
     public Player minionPrefab;
 
-    public override void OnCardPlayed()
+    public override void OnCardPlayed(CardsManager manager)
     {
         Debug.Log("Spawn");
     }
@@ -40,7 +40,7 @@ public class CardPlanejamento : Card
 {
     public int drawCount;
 
-    public override void OnCardPlayed()
+    public override void OnCardPlayed(CardsManager manager)
     {
         Debug.Log("Draw 2");
     }
@@ -50,7 +50,7 @@ public class CardBateria: Card
 {
     public int energyGain;
 
-    public override void OnCardPlayed()
+    public override void OnCardPlayed(CardsManager manager)
     {
         Debug.Log("Received energy " + energyGain);
     }

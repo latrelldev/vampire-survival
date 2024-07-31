@@ -18,10 +18,11 @@ public class PlayZoneView : CardZoneView<PlayZone>
 
     private void OnCardDropped(CardInstance instance, ICardZoneView view)
     {
-        //if view is Hand
-        //if cost is paid for
-        viewController.MoveCard<Discard>(instance);
-        instance.Card.OnCardPlayed();
+        if(view is not HandView)
+        {
+            return;
+        }
+        CardEvents.OnCardPlayed?.Invoke(instance);
     }
 }
 

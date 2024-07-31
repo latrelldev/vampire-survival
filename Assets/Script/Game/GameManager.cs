@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public CardViewController CardViewController => cardViewController;
     [SerializeField] private CardViewController cardViewController;
 
+    public PlayerStatus PlayerStatus => playerStatus;
+    [SerializeField] private PlayerStatus playerStatus;
+
     public event Action OnGameStarted = delegate { };
 
     private void Start()
