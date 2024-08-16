@@ -56,7 +56,10 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         sorting.sortingOrder -= 1;
 
         dragging = false;
-        view.SetState(CardState.Idle);
+        if (view.State == CardState.Controlled)
+        {
+            view.SetState(CardState.Idle);
+        }
         view.ResetTargetPos();
         view.ZoneView.OnEndCardDrag(view, eventData);
     }

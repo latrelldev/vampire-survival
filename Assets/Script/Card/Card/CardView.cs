@@ -83,6 +83,11 @@ public class CardView : MonoBehaviour
 
     private void Update()
     {
+        if (State == CardState.Animating)
+        {
+            return;
+        }
+
         if (synced)
         {
             return;

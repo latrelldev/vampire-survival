@@ -7,9 +7,9 @@ public class CardDrawer : MonoBehaviour
 {
     [SerializeField] private CardView cardView;
 
-    [SerializeField] private TextMeshPro energyText;
-    [SerializeField] private TextMeshPro nameText;
-    [SerializeField] private TextMeshPro effectText;
+    [SerializeField] private TMP_Text energyText;
+    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_Text effectText;
     [SerializeField] private SpriteRenderer cardImage;
 
 
@@ -17,6 +17,8 @@ public class CardDrawer : MonoBehaviour
     {
         energyText.text = cardView.Card.Card.Cost.ToString();
         nameText.text = cardView.Card.Card.Name;
+        effectText.text = cardView.Card.Card.Description;
+
         cardImage.sprite = cardView.Card.Card.Sprite;
     }
 }

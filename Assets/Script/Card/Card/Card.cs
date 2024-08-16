@@ -9,8 +9,13 @@ public abstract class Card
     [Header("Details")]
     [SerializeField] private string id;
     public string Id => id;
+    
     public string Name => name;
     [SerializeField] private string name;
+
+    public string Description => description;
+    [SerializeField] private string description;
+
     public Sprite Sprite => sprite;
     [SerializeField] private Sprite sprite;
 
@@ -22,7 +27,7 @@ public abstract class Card
     [SerializeField] private int upgradeCost;
 
 
-    public abstract void OnCardPlayed(CardsManager manager);
+    public abstract void OnCardPlayed(GameManager manager);
 }
 
 
@@ -30,7 +35,7 @@ public class MinionSpawnCard : Card
 {
     public Player minionPrefab;
 
-    public override void OnCardPlayed(CardsManager manager)
+    public override void OnCardPlayed(GameManager manager)
     {
         Debug.Log("Spawn");
     }
@@ -40,7 +45,7 @@ public class CardPlanejamento : Card
 {
     public int drawCount;
 
-    public override void OnCardPlayed(CardsManager manager)
+    public override void OnCardPlayed(GameManager manager)
     {
         Debug.Log("Draw 2");
     }
@@ -48,10 +53,11 @@ public class CardPlanejamento : Card
 
 public class CardBateria: Card
 {
-    public int energyGain;
+    public int resourceGain;
 
-    public override void OnCardPlayed(CardsManager manager)
+    public override void OnCardPlayed(GameManager manager)
     {
-        Debug.Log("Received energy " + energyGain);
+        manager.PlayerStatus.ChangeResource(resourceGain);
+        Debug.Log("Received energy " + resourceGain);
     }
 }

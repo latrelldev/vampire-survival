@@ -30,7 +30,9 @@ public class CardsManager : MonoBehaviour
         gameManager.OnGameStarted += OnGameStarted;
 
         CardEvents.OnCardPlayed += OnCardPlayed;
+        CardEvents.OnCardRecycled += OnCardRecycled;
     }
+
 
     private void OnGameStarted()
     {
@@ -48,7 +50,7 @@ public class CardsManager : MonoBehaviour
     private void Setup(List<CardInstance> cards)
     {
         Deck deck = GetZone<Deck>();
-        foreach(var card in cards)
+        foreach (var card in cards)
         {
             MoveCard(card, null, deck);
         }
@@ -63,11 +65,7 @@ public class CardsManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            var card = GetZone<Deck>().Cards.FirstOrDefault();
-            if (card != null)
-            {
-                MoveCard(card, GetZone<Deck>(), GetZone<Hand>());
-            }
+            DrawCard();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -83,13 +81,22 @@ public class CardsManager : MonoBehaviour
     private void OnCardPlayed(CardInstance instance)
     {
         Debug.Log("Played");
-        if(gameManager.PlayerStatus.Resources >= instance.Card.Cost)
+        if (gameManager.PlayerStatus.Resources >= instance.Card.Cost)
         {
             gameManager.PlayerStatus.Resources -= instance.Card.Cost;
 
             CardZone from = cardLookup[instance];
-            instance.Card.OnCardPlayed(this);
+            instance.Card.OnCardPlayed(gameManager);
             MoveCard(instance, from, discard);
+        }
+    }
+
+    private void OnCardRecycled(CardInstance instance)
+    {
+        if (cardLookup.TryGetValue(instance, out var zone) && zone is Hand)
+        {
+            MoveCard(instance, zone, discard);
+            gameManager.PlayerStatus.ChangeResource(1);
         }
     }
 
@@ -100,13 +107,43 @@ public class CardsManager : MonoBehaviour
             from.RemoveCard(card);
         }
 
-        if(to != null)
+        if (to != null)
         {
             to.AddCard(card);
         }
 
         cardLookup[card] = to;
         CardEvents.OnCardMoved(card, from, to);
+    }
+
+    public void DrawCard()
+    {
+        var deck = GetZone<Deck>();
+        var discard = GetZone<Discard>();
+
+        if (deck.Cards.Count <= 0)
+        {
+            while (discard.Cards.Count > 0)
+            {
+                MoveCard<Discard, Deck>();
+            }
+        }
+
+        if (deck.Cards.Count <= 0)
+        {
+            Debug.Log("Not enough cards");
+            return;
+        }
+        MoveCard<Deck, Hand>();
+    }
+
+    private void MoveCard<TFrom, TTo>() where TFrom : CardZone where TTo : CardZone
+    {
+        var card = GetZone<TFrom>().Cards.FirstOrDefault();
+        if (card != null)
+        {
+            MoveCard(card, GetZone<TFrom>(), GetZone<TTo>());
+        }
     }
 }
 
@@ -115,4 +152,5 @@ public static class CardEvents
     public static Action<CardInstance, CardZone, CardZone> OnCardMoved = delegate { };
 
     public static Action<CardInstance> OnCardPlayed = delegate { };
+    public static Action<CardInstance> OnCardRecycled = delegate { };
 }

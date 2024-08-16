@@ -18,7 +18,6 @@ public class CardViewController : MonoBehaviour
 
     private List<ICardTransition> transitions;
     private Dictionary<CardZone, ICardZoneView> zones = new Dictionary<CardZone, ICardZoneView>();
-    private Dictionary<CardInstance, ICardZoneView> cardLookup = new Dictionary<CardInstance, ICardZoneView>();
 
     private bool animating = false;
     private Queue<IEnumerator> pendingTransitions = new Queue<IEnumerator>();
@@ -58,8 +57,8 @@ public class CardViewController : MonoBehaviour
     {
         ICardZoneView fromView = zone1 == null ? null : zones[zone1];
         ICardZoneView toView = zone2 == null ? null : zones[zone2];
-        cardLookup[instance] = toView;
-        
+
+        Debug.Log($"Transition from {zone1} to {zone2}");
         ICardTransition transition = transitions.FirstOrDefault(t => t.ValidateTransition(fromView, toView));
         if (transition == null)
         {
@@ -85,23 +84,5 @@ public class CardViewController : MonoBehaviour
             yield return nextTransition;
         }
         animating = false;
-    }
-
-    public void MoveCard(CardInstance card, ICardZoneView from, ICardZoneView to)
-    {
-
-    }
-
-    public void MoveCard<TZone>(CardInstance card) where TZone: CardZone
-    {
-        if (!cardLookup.TryGetValue(card, out var fromView))
-        {
-            throw new Exception("Card was not found on any zone view");
-        }
-
-        CardZone fromZone = zones.FirstOrDefault(kvp => kvp.Value == fromView).Key;
-        CardZone toZone = cardManager.GetZone<TZone>();
-
-        cardManager.MoveCard(card, fromZone, toZone);
     }
 }

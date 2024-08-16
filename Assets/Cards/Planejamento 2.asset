@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Planejamento 2
   m_EditorClassIdentifier: 
   card:
-    rid: 7241706282685825027
+    rid: 7241706453405270019
   references:
     version: 2
     RefIds:
-    - rid: 7241706282685825027
-      type: {class: CardPlanejamento, ns: , asm: Assembly-CSharp}
+    - rid: 7241706453405270019
+      type: {class: MinionSpawnCard, ns: , asm: Assembly-CSharp}
       data:
-        id: p2
-        name: Planejamento 2
-        sprite: {fileID: 21300000, guid: 7f847a47fa8639d488359d3a5e4830af, type: 3}
-        cost: 1
-        upgradeCost: 1
-        drawCount: 3
+        id: 
+        name: 
+        sprite: {fileID: 0}
+        cost: 0
+        upgradeCost: 0
+        minionPrefab: {fileID: 0}

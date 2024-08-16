@@ -13,21 +13,6 @@ public class CardTransitionDeckFromNull: CardTransition<ICardZoneView, DeckView>
         CardAnchor newAnchor = to.GetAnchorForCard(card);
         yield return null; //wait a frame so layout accounts for anchor
         CardView newView = to.GetViewForCard(card);
-        newView.SetState(CardState.Animating);
-
-        newView.ResetCurrentPos();
-
-        newView.transform.rotation = newAnchor.transform.rotation;
-        newView.transform.localScale = newAnchor.transform.localScale;
-
-        for (int i = 0; i < 30; i++)
-        {
-            newView.transform.localScale *= 1.01f;
-            yield return null;
-        }
-
-        newView.transform.localScale = newAnchor.transform.localScale;
-        newView.SetState(CardState.Idle);
         newView.gameObject.SetActive(false);
     }
 }

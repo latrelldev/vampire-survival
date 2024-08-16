@@ -19,13 +19,11 @@ public class Anim : MonoBehaviour
         if (enemy.GetComponent<AIMSeek>() == true)
         {
             animator.SetInteger("Transition", 1);
-            Debug.Log("anm MOV");
         }
 
         else
         {
             animator.SetInteger("Transition", 0);
-            Debug.Log("anm idle");
         }
     }
 
